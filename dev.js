@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'development'
 const path = require('path')
 const Koa = require('koa')
 const koaWebpack = require('koa-webpack')
@@ -32,52 +33,16 @@ const progress = new ProgressBarPlugin({
 })
 
 const config = {
-  client: {
-    stats: 'errors-only',
-    mode: 'development',
-    entry: [
-      path.resolve('src/client.js')
-    ],
-    output: {
-      path: path.resolve('dist'),
-      filename: 'main.js',
-      publicPath: 'http://localhost:3001/'
-    },
-    module: {
-      rules
-    },
-    plugins: [
-      progress
-    ]
-  }
+  client: require('./webpack.config'),
+  server: require('./webpack.server.config')
 }
-config.server = Object.assign({}, config.client, {
-  target: 'node',
-  externals: [
-    nodeExternals({
-      whitelist: [
-        'webpack/hot/poll?300'
-      ]
-    })
-  ],
-  entry: [
-    'webpack/hot/poll?300',
-    path.resolve('src/index.js')
-  ],
-  output: {
-    libraryTarget: 'umd',
-    path: path.resolve('dist'),
-    filename: 'server.js',
-    publicPath: '/'
-  },
-  plugins: [
-    progress,
-    new webpack.HotModuleReplacementPlugin(),
-    new StartServerPlugin({
-      name: 'server.js'
-    })
-  ]
-})
+
+config.server.plugins.push(
+  new webpack.HotModuleReplacementPlugin(),
+  new StartServerPlugin({
+    name: 'server.js'
+  })
+)
 
 const compiler = webpack(config.client)
 const serverCompiler = webpack(config.server)

@@ -1,10 +1,7 @@
 
-```
-src/
-  client.js
-  server.js
-  App.js
-```
+Univeral/Isomorphic React app with webpack and hot module replacement
 
-- koa
-- koa-webpack
+```sh
+npm i
+npm start
+```

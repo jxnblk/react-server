@@ -3,6 +3,8 @@ import { renderToString } from 'react-dom/server'
 import express from 'express'
 import App from './App'
 
+const assets = require('../webpack-assets.json')
+
 const app = (req, res) => {
   const body = renderToString(
     <App />
@@ -11,7 +13,7 @@ const app = (req, res) => {
   const html = `<!DOCTYPE html>
 <title>hello</title>
 <div id=root>${body}</div>
-<script src='http://localhost:3001/main.js'></script>
+<script src='${assets.main.js}'></script>
   `
 
   res.send(html)
@@ -19,8 +21,7 @@ const app = (req, res) => {
 
 const server = express()
 
+server.use(express.static('public'))
 server.use(app)
 
 export default server
-
-// if (module.hot) module.hot.accept()

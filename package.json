@@ -1,22 +1,22 @@
 {
+  "private": true,
   "name": "node-iso",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "node dev.js"
+    "start": "node dist/server.js",
+    "build": "webpack && webpack --config webpack.server.config.js",
+    "dev": "node dev.js"
   },
-  "keywords": [],
   "author": "Brent Jackson",
-  "license": "MIT",
   "dependencies": {
     "@koa/cors": "^2.2.2",
+    "assets-webpack-plugin": "^3.9.5",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "chalk": "^2.4.1",
     "express": "^4.16.3",
+    "fs-extra": "^7.0.0",
     "koa": "^2.5.2",
     "koa-webpack": "^5.1.0",
     "progress-bar-webpack-plugin": "^1.11.0",
@@ -24,6 +24,7 @@
     "react-dom": "^16.4.2",
     "start-server-webpack-plugin": "^2.2.5",
     "webpack": "^4.16.5",
+    "webpack-command": "^0.4.1",
     "webpack-node-externals": "^1.7.2"
   }
 }

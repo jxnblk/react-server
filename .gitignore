@@ -1,1 +1,3 @@
 dist
+public/main.js
+webpack-assets.json

@@ -1,5 +1,6 @@
 process.env.NODE_ENV = 'development'
 const path = require('path')
+const fs = require('fs-extra')
 const Koa = require('koa')
 const koaWebpack = require('koa-webpack')
 const cors = require('@koa/cors')
@@ -39,6 +40,9 @@ const config = {
 
 config.server.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
+  new webpack.WatchIgnorePlugin([
+    path.resolve('webpack-assets.json')
+  ]),
   new StartServerPlugin({
     name: 'server.js'
   })
@@ -52,6 +56,8 @@ compiler.hooks.done.tap('dev-server', () => {
 })
 
 const start = async () => {
+  fs.removeSync('./webpack-assets.json')
+
   const middleware = await koaWebpack({
     compiler,
     hotClient: {

@@ -1,5 +1,6 @@
 const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const AssetsPlugin = require('assets-webpack-plugin')
 const chalk = require('chalk')
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -32,7 +33,7 @@ module.exports = {
     path.resolve('src/client.js')
   ],
   output: {
-    path: path.resolve('dist'),
+    path: path.resolve('public'),
     filename: 'main.js',
     publicPath: isDev ? 'http://localhost:3001/' : '/'
   },
@@ -40,6 +41,9 @@ module.exports = {
     rules
   },
   plugins: [
-    progress
+    progress,
+    new AssetsPlugin({
+      // path: path.resolve('dist')
+    })
   ]
 }

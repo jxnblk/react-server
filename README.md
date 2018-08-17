@@ -41,3 +41,5 @@ Lots of ideas stolen directly from [Razzle][]
 [Babel]: https://github.com/babel/babel
 [koa-webpack]: https://github.com/shellscape/koa-webpack
 [start-server-webpack-plugin]: https://github.com/ericclemmons/start-server-webpack-plugin
+
+MIT License

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "node-iso",
+  "name": "react-server",
   "scripts": {
     "start": "node dist/server.js",
     "build": "webpack && webpack --config webpack.server.config.js",

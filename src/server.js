@@ -21,7 +21,7 @@ const app = (req, res) => {
 
 const server = express()
 
-server.use(express.static('public'))
+server.use(express.static('dist/public'))
 server.use(app)
 
 export default server

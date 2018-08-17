@@ -6,9 +6,6 @@ const koaWebpack = require('koa-webpack')
 const cors = require('@koa/cors')
 const webpack = require('webpack')
 const StartServerPlugin = require('start-server-webpack-plugin')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const nodeExternals = require('webpack-node-externals')
-const chalk = require('chalk')
 
 const app = new Koa()
 
@@ -19,19 +16,6 @@ const rules = [
     use: 'babel-loader'
   }
 ]
-
-const progress = new ProgressBarPlugin({
-  width: '24',
-  complete: '█',
-  incomplete: chalk.gray('░'),
-  format: [
-    chalk.magenta('[hello] :bar'),
-    chalk.magenta(':percent'),
-    chalk.gray(':elapseds :msg'),
-  ].join(' '),
-  summary: false,
-  customSummary: () => {},
-})
 
 const config = {
   client: require('./webpack.config'),

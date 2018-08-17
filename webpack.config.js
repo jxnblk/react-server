@@ -33,7 +33,7 @@ module.exports = {
     path.resolve('src/client.js')
   ],
   output: {
-    path: path.resolve('public'),
+    path: path.resolve('dist/public'),
     filename: 'main.js',
     publicPath: isDev ? 'http://localhost:3001/' : '/'
   },
@@ -42,8 +42,6 @@ module.exports = {
   },
   plugins: [
     progress,
-    new AssetsPlugin({
-      // path: path.resolve('dist')
-    })
+    new AssetsPlugin()
   ]
 }

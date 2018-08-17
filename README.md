@@ -3,6 +3,9 @@
 
 Univeral (isomorphic) React express app with webpack and hot module replacement
 
+**Note:** This is intended for demonstration and educational purposes.
+If you're building a server-rendered React application, I'd recommend looking at [Next.js][] or [Razzle][], which was the inspiration for this.
+
 - Universal app with SSR and client side rehydration
 - Hot module replacement on both server and client
 - Support for ES6 & JSX with [Babel][]
@@ -38,6 +41,7 @@ When any of the source files change, webpack's hot module replacement will updat
 Lots of ideas stolen directly from [Razzle][]
 
 [Razzle]: https://github.com/jaredpalmer/razzle
+[Next.js]: https://github.com/zeit/next.js/
 [Babel]: https://github.com/babel/babel
 [koa-webpack]: https://github.com/shellscape/koa-webpack
 [start-server-webpack-plugin]: https://github.com/ericclemmons/start-server-webpack-plugin

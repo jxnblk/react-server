@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Head from './Head'
 
 // for demonstration only
 const Root = styled.div([], {
@@ -12,5 +13,9 @@ const Root = styled.div([], {
 
 export default () =>
   <Root>
+    <Head>
+      <title>hello</title>
+      <link rel='canonical' href='https://github.com/jxnblk/react-server' />
+    </Head>
     <h1>hello</h1>
   </Root>

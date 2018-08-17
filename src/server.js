@@ -1,25 +1,33 @@
 import React from 'react'
-import { renderToString } from 'react-dom/server'
+import {
+  renderToString,
+  renderToStaticMarkup
+} from 'react-dom/server'
 import { ServerStyleSheet } from 'styled-components'
 import express from 'express'
 import App from './App'
+import { HeadProvider } from './Head'
 
 const assets = require('../webpack-assets.json')
 
 const app = (req, res) => {
+  const headTags = []
   const sheet = new ServerStyleSheet()
   const body = renderToString(
     sheet.collectStyles(
-      <App />
+      <HeadProvider tags={headTags}>
+        <App />
+      </HeadProvider>
     )
   )
 
+  const head = renderToStaticMarkup(headTags)
   const styles = sheet.getStyleTags()
 
   const html = `<!DOCTYPE html>
 <html>
 <head>
-<title>hello</title>
+${head}
 ${styles}
 </head>
 <body>

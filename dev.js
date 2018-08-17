@@ -1,6 +1,7 @@
 const path = require('path')
 const Koa = require('koa')
 const koaWebpack = require('koa-webpack')
+const cors = require('@koa/cors')
 const webpack = require('webpack')
 const StartServerPlugin = require('start-server-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
@@ -37,7 +38,7 @@ config.server = Object.assign({}, config.client, {
     nodeExternals()
   ],
   entry: [
-    path.resolve('src/server.js')
+    path.resolve('src/index.js')
   ],
   output: {
     libraryTarget: 'umd',
@@ -63,10 +64,10 @@ compiler.plugin('done', () => {
 const start = async () => {
   const middleware = await koaWebpack({
     compiler,
-    hotClient: {
-      // port: 3000
-    }
+    hotClient: {},
+    devMiddleware: {}
   })
+  app.use(cors())
   app.use(middleware)
   const server = app.listen(3001)
 }

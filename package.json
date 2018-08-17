@@ -10,10 +10,12 @@
   "author": "Brent Jackson",
   "license": "MIT",
   "dependencies": {
+    "@koa/cors": "^2.2.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "express": "^4.16.3",
     "koa": "^2.5.2",
     "koa-webpack": "^5.1.0",
     "react": "^16.4.2",

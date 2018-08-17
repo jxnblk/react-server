@@ -16,3 +16,9 @@ npm run dev
 ```sh
 npm run build && npm start
 ```
+
+### Credits
+
+Lots of ideas stolen directly from [Razzle][]
+
+[Razzle]: https://github.com/jaredpalmer/razzle

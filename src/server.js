@@ -13,7 +13,7 @@ const app = (req, res) => {
 <div id=root>${body}</div>
 <script src='http://localhost:3001/main.js'></script>
   `
-  console.log(html)
+
   res.send(html)
 }
 

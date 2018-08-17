@@ -11,9 +11,8 @@ server.listen(3000, err => {
 })
 
 if (module.hot) {
-  console.log('server hot')
   module.hot.accept('./server.js', () => {
-    console.log('server hmr')
+    console.log('server reload')
     server.removeListener('request', current)
     const next = require('./server').default
     server.on('request', next)

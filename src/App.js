@@ -1,4 +1,4 @@
 import React from 'react'
 
 export default () =>
-  <h1>hi hello</h1>
+  <h1>boop</h1>

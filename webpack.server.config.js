@@ -4,21 +4,15 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const chalk = require('chalk')
 const base = require('./webpack.config')
 
-const isDev = process.env.NODE_ENV === 'development'
-
 module.exports = Object.assign({}, base, {
+  name: 'server',
   target: 'node',
   externals: [
-    nodeExternals({
-      whitelist: [
-        'webpack/hot/poll?300'
-      ]
-    })
+    nodeExternals()
   ],
   entry: [
-    isDev ? 'webpack/hot/poll?300' : null,
-    path.resolve('src/index.js')
-  ].filter(Boolean),
+    path.resolve('src/server.js')
+  ],
   output: {
     libraryTarget: 'umd',
     path: path.resolve('dist'),

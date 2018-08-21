@@ -1,60 +1,59 @@
 process.env.NODE_ENV = 'development'
+
 const path = require('path')
-const fs = require('fs-extra')
-const Koa = require('koa')
-const koaWebpack = require('koa-webpack')
-const cors = require('@koa/cors')
+// const fs = require('fs-extra')
+const express = require('express')
+const devMiddleware = require('webpack-dev-middleware')
+const hotMiddleware = require('webpack-hot-middleware')
 const webpack = require('webpack')
-const StartServerPlugin = require('start-server-webpack-plugin')
 
-const app = new Koa()
-
-const rules = [
-  {
-    test: /\.js$/,
-    exclude: /node_modules/,
-    use: 'babel-loader'
-  }
-]
+const app = express()
 
 const config = {
   client: require('./webpack.config'),
   server: require('./webpack.server.config')
 }
 
-config.server.plugins.push(
+config.client.mode = 'development'
+config.server.mode = 'development'
+
+config.client.entry.unshift(
+  'webpack-hot-middleware/client?name=client'
+)
+
+config.client.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
   new webpack.WatchIgnorePlugin([
     path.resolve('webpack-assets.json')
   ]),
-  new StartServerPlugin({
-    name: 'server.js'
-  })
 )
 
-const compiler = webpack(config.client)
-const serverCompiler = webpack(config.server)
+const compiler = webpack([ config.client, config.server ])
 
-compiler.hooks.done.tap('dev-server', () => {
-  serverCompiler.watch({}, stats => {})
-})
+let routes = () => {}
 
 const start = async () => {
-  fs.removeSync('./webpack-assets.json')
+  // fs.removeSync('./webpack-assets.json')
 
-  const middleware = await koaWebpack({
-    compiler,
-    hotClient: {
-      logLevel: 'error'
-    },
-    devMiddleware: {
-      logLevel: 'error',
-      stats: 'errors-only',
-    }
+  app.use(devMiddleware(compiler, {
+    stats: 'errors-only',
+    noInfo: true,
+    publicPath: '/',
+    writeToDisk: filename => /server/.test(filename)
+  }))
+
+  app.use(hotMiddleware(compiler))
+
+  app.use((...args) => routes(...args))
+
+  compiler.hooks.done.tap('dev-server', () => {
+    delete require.cache[require.resolve('./dist/server')]
+    routes = require('./dist/server').default
   })
-  app.use(cors())
-  app.use(middleware)
-  const server = app.listen(3001)
+
+  const server = app.listen(3000, () => {
+    console.log('dev server 3000')
+  })
 }
 
 start()

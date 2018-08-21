@@ -3,8 +3,6 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
 const chalk = require('chalk')
 
-const isDev = process.env.NODE_ENV === 'development'
-
 const rules = [
   {
     test: /\.js$/,
@@ -27,15 +25,15 @@ const progress = new ProgressBarPlugin({
 })
 
 module.exports = {
-  stats: 'errors-only',
-  mode: isDev ? 'development' : 'production',
+  name: 'client',
+  mode: 'production',
   entry: [
     path.resolve('src/client.js')
   ],
   output: {
     path: path.resolve('dist/public'),
     filename: 'main.js',
-    publicPath: isDev ? 'http://localhost:3001/' : '/'
+    publicPath: '/'
   },
   module: {
     rules

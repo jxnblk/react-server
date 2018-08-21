@@ -3,10 +3,7 @@ import { renderToString } from 'react-dom/server'
 import express from 'express'
 import App from './App'
 
-// const assets = require('../webpack-assets.json')
 const server = express()
-
-// server.use(express.static('dist/public'))
 
 server.use((req, res) => {
   const body = renderToString(

@@ -2,31 +2,28 @@
   "private": true,
   "name": "react-server",
   "scripts": {
-    "start": "node index.js",
-    "build": "webpack && webpack --config webpack.server.config.js",
+    "start": "NODE_ENV=production node dist/server.js",
+    "build": "webpack",
     "dev": "node dev.js"
   },
   "author": "Brent Jackson",
   "dependencies": {
-    "@koa/cors": "^2.2.2",
-    "assets-webpack-plugin": "^3.9.5",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "chalk": "^2.4.1",
     "express": "^4.16.3",
-    "fs-extra": "^7.0.0",
-    "koa": "^2.5.2",
-    "koa-webpack": "^5.1.0",
     "progress-bar-webpack-plugin": "^1.11.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "start-server-webpack-plugin": "^2.2.5",
     "webpack": "^4.16.5",
     "webpack-command": "^0.4.1",
     "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.22.3",
     "webpack-node-externals": "^1.7.2"
+  },
+  "devDependencies": {
+    "webpack-bundle-analyzer": "^2.13.1"
   }
 }

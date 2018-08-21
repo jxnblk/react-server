@@ -1,18 +1,15 @@
 process.env.NODE_ENV = 'development'
 
 const path = require('path')
-// const fs = require('fs-extra')
 const express = require('express')
 const devMiddleware = require('webpack-dev-middleware')
 const hotMiddleware = require('webpack-hot-middleware')
 const webpack = require('webpack')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const app = express()
 
-const config = {
-  client: require('./webpack.config'),
-  server: require('./webpack.server.config')
-}
+const config = require('./webpack.config')
 
 config.client.mode = 'development'
 config.server.mode = 'development'
@@ -23,39 +20,35 @@ config.client.entry.unshift(
 
 config.client.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.WatchIgnorePlugin([
-    path.resolve('webpack-assets.json')
-  ]),
+  new BundleAnalyzerPlugin()
 )
+
+config.server.entry = path.resolve('src/server.js')
 
 const compiler = webpack([ config.client, config.server ])
 
 let routes = () => {}
 
-const start = async () => {
-  // fs.removeSync('./webpack-assets.json')
+app.use(devMiddleware(compiler, {
+  stats: 'errors-only',
+  logLevel: 'error',
+  noInfo: true,
+  publicPath: '/',
+  writeToDisk: filename => /server/.test(filename)
+}))
 
-  app.use(devMiddleware(compiler, {
-    stats: 'errors-only',
-    noInfo: true,
-    publicPath: '/',
-    writeToDisk: filename => /server/.test(filename)
-  }))
+app.use(hotMiddleware(compiler, {
+  name: 'client'
+}))
 
-  app.use(hotMiddleware(compiler, {
-    name: 'client'
-  }))
+app.use((...args) => routes(...args))
 
-  app.use((...args) => routes(...args))
+compiler.hooks.done.tap('dev-server', () => {
+  delete require.cache[require.resolve('./dist/server')]
+  routes = require('./dist/server').default
+})
 
-  compiler.hooks.done.tap('dev-server', () => {
-    delete require.cache[require.resolve('./dist/server')]
-    routes = require('./dist/server').default
-  })
+const server = app.listen(3000, () => {
+  console.log('dev server 3000')
+})
 
-  const server = app.listen(3000, () => {
-    console.log('dev server 3000')
-  })
-}
-
-start()

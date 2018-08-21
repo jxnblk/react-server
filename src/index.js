@@ -1,21 +1,13 @@
-import http from 'http'
-import app from './server'
+import express from 'express'
+import server from './server'
 
-const server = http.createServer(app)
+const app = express()
 
-let current = app
+app.use(express.static('dist/public'))
+app.use(server)
 
-server.listen(3000, err => {
+app.listen(3000, err => {
   if (err) console.log(err)
   console.log('server listening on port 3000')
 })
 
-if (module.hot) {
-  module.hot.accept('./server.js', () => {
-    console.log('server reload')
-    server.removeListener('request', current)
-    const next = require('./server').default
-    server.on('request', next)
-    current = next
-  })
-}

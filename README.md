@@ -27,6 +27,18 @@ npm run build && npm start
 
 ## How development mode works
 
+The [dev server](dev.js) uses webpack in [multi-compiler mode](https://webpack.js.org/api/node/#multicompiler), requiring the compiled `server.js` file to run an express server with [webpack-dev-middleware][] and [webpack-hot-middleware][].
+When the server compiler rebuilds, the server is required again to handle server side rendering.
+When the client side app changes, it uses webpack hot module replacement to update the client.
+
+[webpack-dev-middleware]: https://github.com/webpack/webpack-dev-middleware
+[webpack-hot-middleware]: https://github.com/webpack-contrib/webpack-hot-middleware
+
+
+### Initial Implementation
+
+The original implementation was largely based on [Razzle][], which worked like this:
+
 In much the same way [Razzle][] works, development mode runs two webpack compilers.
 The client compiler is passed to [koa-webpack][] to start a development server on port `3001`.
 Once the client compiler has finished, the server compiler is put into watch mode.

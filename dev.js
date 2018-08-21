@@ -42,7 +42,9 @@ const start = async () => {
     writeToDisk: filename => /server/.test(filename)
   }))
 
-  app.use(hotMiddleware(compiler))
+  app.use(hotMiddleware(compiler, {
+    name: 'client'
+  }))
 
   app.use((...args) => routes(...args))
 

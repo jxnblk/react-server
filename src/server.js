@@ -1,13 +1,19 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
+import { StaticRouter } from 'react-router-dom'
 import express from 'express'
 import App from './App'
 
 const server = express()
 
 server.use((req, res) => {
+  const router = {}
   const body = renderToString(
-    <App />
+    <StaticRouter
+      location={req.url}
+      context={router}>
+      <App />
+    </StaticRouter>
   )
 
   const html = `<!DOCTYPE html>

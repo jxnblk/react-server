@@ -20,7 +20,7 @@ config.client.entry.unshift(
 
 config.client.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
-  new BundleAnalyzerPlugin()
+  // new BundleAnalyzerPlugin()
 )
 
 config.server.entry = path.resolve('src/server.js')

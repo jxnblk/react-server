@@ -1,8 +1,6 @@
 
 # Hello
 
-## mdx
-
-Hi there little hot-loading React SSR app
+## mdx beep boop
 
 This will hot reload MDX or React component pages

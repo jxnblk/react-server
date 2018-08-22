@@ -1,4 +1,3 @@
-import path from 'path'
 import React from 'react'
 import {
   Switch,
@@ -6,28 +5,9 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 import Catch from './Catch'
+import FileRoutes from './FileRoutes'
 
-const req = require.context('./pages', true, /\.(js|md|mdx)$/)
-
-const routes = req.keys().map(key => {
-  const extname = path.extname(key)
-  const name = path.basename(key, extname)
-  const exact = name === 'index'
-  const mod = req(key)
-  const Component = mod.default
-  if (typeof Component !== 'function') return null
-  if (/^_/.test(name)) return null
-  return {
-    key,
-    name,
-    extname,
-    exact,
-    path: '/' + (exact ? '' : name),
-    module: mod,
-    Component,
-  }
-})
-.filter(Boolean)
+const context = require.context('./pages', true, /\.(js|md|mdx)$/)
 
 const Root = styled.div`
   padding: 32px;
@@ -35,19 +15,18 @@ const Root = styled.div`
   line-height: 1.5;
 `
 
+const Routes = () =>
+  <Switch>
+    <Route
+      path='/'
+      exact
+      render={() => <h1>home</h1>}
+    />
+  </Switch>
+
 export default () =>
   <Catch>
     <Root>
-      <Switch>
-        {routes.map(({ Component, ...route }) => (
-          <Route
-            {...route}
-            component={Component}
-          />
-        ))}
-        <Route
-          render={() => '404'}
-        />
-      </Switch>
+      <FileRoutes context={context} />
     </Root>
   </Catch>

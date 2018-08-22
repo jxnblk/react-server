@@ -5,6 +5,7 @@ import {
   Route
 } from 'react-router-dom'
 import styled from 'styled-components'
+import Catch from './Catch'
 
 const req = require.context('./pages', true, /\.(js|md|mdx)$/)
 
@@ -35,16 +36,18 @@ const Root = styled.div`
 `
 
 export default () =>
-  <Root>
-    <Switch>
-      {routes.map(({ Component, ...route }) => (
+  <Catch>
+    <Root>
+      <Switch>
+        {routes.map(({ Component, ...route }) => (
+          <Route
+            {...route}
+            component={Component}
+          />
+        ))}
         <Route
-          {...route}
-          render={() => <Component />}
+          render={() => '404'}
         />
-      ))}
-      <Route
-        render={() => '404'}
-      />
-    </Switch>
-  </Root>
+      </Switch>
+    </Root>
+  </Catch>

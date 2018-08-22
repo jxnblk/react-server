@@ -11,26 +11,6 @@ import App from './App'
 
 const server = express()
 
-const Document = ({
-  styles = '',
-  body = '',
-}) =>
-  <html lang='en'>
-    <head>
-      <meta charSet='utf-8' />
-      {styles}
-    </head>
-    <body>
-      <div
-        id='root'
-        dangerouslySetInnerHTML={{
-          __html: body
-        }}
-      />
-      <script src='/main.js' />
-    </body>
-  </html>
-
 const Head = ({
   title = 'hello'
 }) =>
@@ -57,26 +37,16 @@ server.use((req, res) => {
       <App />
     </StaticRouter>
   )
+
   const stream = sheet.interleaveWithNodeStream(
     renderToNodeStream(app)
   )
+
   stream.pipe(res, { end: false })
   stream.on('end', () => {
+    console.log('router', router)
     res.end(`</div><script src='/main.js'></script></body></html>`)
   })
-  // const body = renderToString()
-  // const styles = sheet.getStyleElement()
-
-
-  // const html = renderToStaticMarkup(
-  //   <Document
-  //     styles={styles}
-  //     body={body}
-  //   />
-  // )
-
-  // res.write(html)
-  // res.end()
 })
 
 export default server

@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 import Catch from './Catch'
+import Head from './Head'
 import FileRoutes from './FileRoutes'
 
 const context = require.context('./pages', true, /\.(js|md|mdx)$/)
@@ -26,6 +27,10 @@ const Routes = () =>
 
 export default () =>
   <Catch>
+    <Head>
+      <title>Beep boop</title>
+      <meta name='description' content='beep boop' />
+    </Head>
     <Root>
       <FileRoutes context={context} />
     </Root>

@@ -11,22 +11,19 @@ import App from './App'
 
 const server = express()
 
-const Head = ({
-  title = 'hello'
-}) =>
+const headElement = (
   <head>
     <meta charSet='utf-8' />
     <meta name='viewport' content='width=device-width,initial-scale=1' />
-    <title>{title}</title>
+    <title>hello</title>
   </head>
+)
 
 server.use((req, res) => {
   const router = {}
   const sheet = new ServerStyleSheet()
   res.write('<!DOCTYPE html><html>')
-  const head = renderToStaticMarkup(
-    <Head />
-  )
+  const head = renderToStaticMarkup(headElement)
   res.write(head)
   res.write('<body><div id=root>')
 
@@ -44,7 +41,6 @@ server.use((req, res) => {
 
   stream.pipe(res, { end: false })
   stream.on('end', () => {
-    console.log('router', router)
     res.end(`</div><script src='/main.js'></script></body></html>`)
   })
 })

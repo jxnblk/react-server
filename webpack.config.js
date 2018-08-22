@@ -9,7 +9,15 @@ const rules = [
     test: /\.js$/,
     exclude: /node_modules/,
     use: 'babel-loader'
-  }
+  },
+  {
+    test: /\.mdx?$/,
+    exclude: /node_modules/,
+    use: [
+      'babel-loader',
+      '@mdx-js/loader'
+    ]
+  },
 ]
 
 const client = {
